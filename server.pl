@@ -17,6 +17,8 @@ suspect(sophie).
 has_motive(john, vol).
 has_motive(mary, assassinat).
 has_motive(alice, escroquerie).
+has_motive(bruno, escroquerie).
+has_motive(sophie, escroquerie).
 
 was_near_crime_scene(john, vol).
 was_near_crime_scene(mary, assassinat).
