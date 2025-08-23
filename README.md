@@ -50,7 +50,7 @@ sudo apt-get install swi-prolog
 
 1. **Cloner le repository**
 ```bash
-git clone git@github.com:Donovan700/PrologIA.git
+git clone https://github.com/Donovan700/PrologIA.git
 cd PrologIA
 ```
 
