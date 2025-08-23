@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Système d'Enquête Policière</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        font-size: 1.1em;
+        opacity: 0.9;
+      }
+
+      .main-panel {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+
+      .panel-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .panel-body {
+        padding: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+      }
+
+      select,
+      button {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .results {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 5px solid #667eea;
+      }
+
+      .results h3 {
+        color: #667eea;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+      }
+
+      .result-item {
+        background: white;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .result-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      .guilty {
+        border-left-color: #dc3545;
+        background: #fff5f5;
+      }
+
+      .not-guilty {
+        border-left-color: #28a745;
+        background: #f8fff9;
+      }
+
+      .evidence-list {
+        margin-top: 10px;
+        padding-left: 20px;
+      }
+
+      .evidence-item {
+        display: inline-block;
+        background: #e9ecef;
+        padding: 4px 8px;
+        margin: 2px;
+        border-radius: 4px;
+        font-size: 0.85em;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+      }
+
+      .error {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #dc3545;
+        margin: 10px 0;
+      }
+
+      .info-panel {
+        background: #d1ecf1;
+        color: #0c5460;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .panel-body {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🕵️ Système d'Enquête Policière</h1>
+        <p>Analysez les preuves et déterminez la culpabilité des suspects</p>
+      </div>
+
+      <div class="main-panel">
+        <div class="panel-header">
+          <h2>Interface d'Investigation</h2>
+        </div>
+
+        <div class="panel-body">
+          <div class="info-panel">
+            <strong>ℹ️ Information:</strong> Ce système analyse les preuves
+            selon les règles logiques définies pour chaque type de crime.
+          </div>
+
+          <div class="form-group">
+            <label for="suspect">Choisir un suspect:</label>
+            <select id="suspect">
+              <option value="">-- Sélectionner un suspect --</option>
+              <option value="john">John</option>
+              <option value="mary">Mary</option>
+              <option value="alice">Alice</option>
+              <option value="bruno">Bruno</option>
+              <option value="sophie">Sophie</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="crime">Type de crime:</label>
+            <select id="crime">
+              <option value="">-- Sélectionner un crime --</option>
+              <option value="vol">Vol</option>
+              <option value="assassinat">Assassinat</option>
+              <option value="escroquerie">Escroquerie</option>
+            </select>
+          </div>
+
+          <div class="action-buttons">
+            <button onclick="investigate()" id="investigateBtn">
+              🔍 Enquêter
+            </button>
+            <button onclick="listAllSuspects()">👥 Tous les suspects</button>
+            <button onclick="findAllGuilty()">⚖️ Tous les coupables</button>
+            <button onclick="showSystemInfo()">📋 Info système</button>
+          </div>
+
+          <div id="results" class="results" style="display: none">
+            <h3 id="resultsTitle">Résultats</h3>
+            <div id="resultsContent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Simulation de la logique Prolog en JavaScript
+      const suspects = ["john", "mary", "alice", "bruno", "sophie"];
+      const crimes = ["vol", "assassinat", "escroquerie"];
+
+      // Base de connaissances (simulation des faits Prolog)
+      const facts = {
+        // Motifs
+        motives: {
+          john: ["vol"],
+          mary: ["assassinat"],
+          alice: ["escroquerie"],
+        },
+        // Proximité de la scène de crime
+        nearScene: {
+          john: ["vol"],
+          mary: ["assassinat"],
+        },
+        // Empreintes sur l'arme
+        fingerprints: {
+          john: ["vol"],
+          mary: ["assassinat"],
+        },
+        // Transactions bancaires suspectes
+        bankTransactions: {
+          alice: ["escroquerie"],
+          bruno: ["escroquerie"],
+        },
+        // Fausse identité
+        fakeIdentity: {
+          sophie: ["escroquerie"],
+        },
+        // Témoins oculaires
+        eyewitness: {
+          mary: ["assassinat"],
+        },
+      };
+
+      // Règles de détermination de culpabilité
+      function isGuilty(suspect, crime) {
+        switch (crime) {
+          case "vol":
+            return (
+              hasEvidence(suspect, "motives", crime) &&
+              hasEvidence(suspect, "nearScene", crime) &&
+              hasEvidence(suspect, "fingerprints", crime)
+            );
+
+          case "assassinat":
+            return (
+              hasEvidence(suspect, "motives", crime) &&
+              hasEvidence(suspect, "nearScene", crime) &&
+              (hasEvidence(suspect, "fingerprints", crime) ||
+                hasEvidence(suspect, "eyewitness", crime))
+            );
+
+          case "escroquerie":
+            return (
+              hasEvidence(suspect, "motives", crime) &&
+              (hasEvidence(suspect, "bankTransactions", crime) ||
+                hasEvidence(suspect, "fakeIdentity", crime))
+            );
+
+          default:
+            return false;
+        }
+      }
+
+      function hasEvidence(suspect, evidenceType, crime) {
+        return (
+          facts[evidenceType][suspect] &&
+          facts[evidenceType][suspect].includes(crime)
+        );
+      }
+
+      function getEvidence(suspect, crime) {
+        const evidence = [];
+        Object.keys(facts).forEach((evidenceType) => {
+          if (hasEvidence(suspect, evidenceType, crime)) {
+            evidence.push(evidenceType);
+          }
+        });
+        return evidence;
+      }
+
+      function investigate() {
+        const suspect = document.getElementById("suspect").value;
+        const crime = document.getElementById("crime").value;
+
+        if (!suspect || !crime) {
+          showError("Veuillez sélectionner un suspect et un type de crime.");
+          return;
+        }
+
+        const guilty = isGuilty(suspect, crime);
+        const evidence = getEvidence(suspect, crime);
+
+        showResults("Résultat de l'enquête", [
+          {
+            suspect: suspect,
+            crime: crime,
+            guilty: guilty,
+            evidence: evidence,
+          },
+        ]);
+      }
+
+      function listAllSuspects() {
+        const results = suspects.map((suspect) => {
+          const suspectCrimes = [];
+          crimes.forEach((crime) => {
+            if (isGuilty(suspect, crime)) {
+              suspectCrimes.push(crime);
+            }
+          });
+          return {
+            suspect: suspect,
+            crimes: suspectCrimes,
+            totalCrimes: suspectCrimes.length,
+          };
+        });
+
+        showSuspectsList("Tous les suspects", results);
+      }
+
+      function findAllGuilty() {
+        const results = [];
+        crimes.forEach((crime) => {
+          const guiltySuspects = suspects.filter((suspect) =>
+            isGuilty(suspect, crime)
+          );
+          if (guiltySuspects.length > 0) {
+            results.push({
+              crime: crime,
+              suspects: guiltySuspects,
+            });
+          }
+        });
+
+        showGuiltyList("Tous les coupables par crime", results);
+      }
+
+      function showSystemInfo() {
+        const info = `
+                <div class="result-item">
+                    <h4>📊 Statistiques du système</h4>
+                    <p><strong>Suspects:</strong> ${suspects.length}</p>
+                    <p><strong>Types de crimes:</strong> ${crimes.length}</p>
+                    <p><strong>Total des preuves:</strong> ${
+                      Object.keys(facts).length
+                    } types</p>
+                </div>
+                <div class="result-item">
+                    <h4>🔍 Règles d'investigation</h4>
+                    <p><strong>Vol:</strong> Motif + Proximité + Empreintes</p>
+                    <p><strong>Assassinat:</strong> Motif + Proximité + (Empreintes OU Témoin)</p>
+                    <p><strong>Escroquerie:</strong> Motif + (Transaction OU Fausse identité)</p>
+                </div>
+            `;
+
+        showRawResults("Informations système", info);
+      }
+
+      function showResults(title, results) {
+        let html = "";
+        results.forEach((result) => {
+          const evidenceHtml = result.evidence
+            .map(
+              (e) =>
+                `<span class="evidence-item">${translateEvidence(e)}</span>`
+            )
+            .join("");
+
+          html += `
+                    <div class="result-item ${
+                      result.guilty ? "guilty" : "not-guilty"
+                    }">
+                        <strong>${result.suspect.toUpperCase()}</strong> 
+                        ${result.guilty ? "🔴 COUPABLE" : "🟢 NON COUPABLE"} 
+                        de <em>${result.crime}</em>
+                        ${
+                          evidenceHtml
+                            ? `<div class="evidence-list">Preuves: ${evidenceHtml}</div>`
+                            : ""
+                        }
+                    </div>
+                `;
+        });
+
+        showRawResults(title, html);
+      }
+
+      function showSuspectsList(title, results) {
+        let html = "";
+        results.forEach((result) => {
+          const crimesText =
+            result.crimes.length > 0
+              ? result.crimes.join(", ")
+              : "Aucun crime prouvé";
+
+          html += `
+                    <div class="result-item ${
+                      result.totalCrimes > 0 ? "guilty" : "not-guilty"
+                    }">
+                        <strong>${result.suspect.toUpperCase()}</strong>
+                        <p>Crimes: ${crimesText} (${result.totalCrimes})</p>
+                    </div>
+                `;
+        });
+
+        showRawResults(title, html);
+      }
+
+      function showGuiltyList(title, results) {
+        let html = "";
+        if (results.length === 0) {
+          html = '<div class="result-item">Aucun coupable trouvé.</div>';
+        } else {
+          results.forEach((result) => {
+            html += `
+                        <div class="result-item guilty">
+                            <strong>${result.crime.toUpperCase()}</strong>
+                            <p>Coupables: ${result.suspects.join(", ")}</p>
+                        </div>
+                    `;
+          });
+        }
+
+        showRawResults(title, html);
+      }
+
+      function showRawResults(title, html) {
+        document.getElementById("resultsTitle").textContent = title;
+        document.getElementById("resultsContent").innerHTML = html;
+        document.getElementById("results").style.display = "block";
+        document
+          .getElementById("results")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      function showError(message) {
+        const html = `<div class="error">❌ ${message}</div>`;
+        showRawResults("Erreur", html);
+      }
+
+      function translateEvidence(evidence) {
+        const translations = {
+          motives: "Motif",
+          nearScene: "Proximité",
+          fingerprints: "Empreintes",
+          bankTransactions: "Transaction bancaire",
+          fakeIdentity: "Fausse identité",
+          eyewitness: "Témoin oculaire",
+        };
+        return translations[evidence] || evidence;
+      }
+    </script>
+  </body>
+</html>
