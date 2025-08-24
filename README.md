@@ -9,10 +9,10 @@ Membres du Groupe :
 
 - RAKOTO SEDSON Bryan Donovan
 - RAMIARIMANANA Sompitriniaina To Désiré
+- MIARINIAINA Lai Troy Mi Erica
+- RANDRIATSEHENO Rajo Stelly
 - VONIARIMALALA Fiaro Miangaly
 - ANDRIANARIVONY Zo Michael
-- RANDRIATSEHENO Rajo Stelly
-- MIARINIAINA Lai Troy Mi Erica
 
 ## 🚀 Installation et Lancement Rapide
 
