@@ -181,6 +181,12 @@ home_page(_Request) :-
     </div>
 
     <script>
+        const crimeTranslations = {
+            vol: "theft",
+            assassinat: "murder",
+            escroquerie: "fraud"
+        };
+
         async function investigate() {
             const suspect = document.getElementById("suspect").value;
             const crime = document.getElementById("crime").value;
@@ -198,8 +204,10 @@ home_page(_Request) :-
                 const resultText = isGuilty ? "GUILTY" : "NOT GUILTY";
                 const className = isGuilty ? "guilty" : "not-guilty";
 
+                const crimeInEnglish = crimeTranslations[crime] || crime;
+
                 resultDiv.innerHTML = "<div class=\\"result " + className + "\\">" +
-                    suspect.toUpperCase() + " is " + resultText + " of " + crime.toUpperCase() +
+                    suspect.toUpperCase() + " is " + resultText + " of " + crimeInEnglish.toUpperCase() +
                     "</div>";
 
             } catch (error) {
