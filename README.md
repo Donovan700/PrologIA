@@ -7,12 +7,12 @@ Classe : M1 GB Groupe 1
 
 Membres du Groupe :
 
-- RAKOTO SEDSON Bryan Donovan
-- RAMIARIMANANA Sompitriniaina To Désiré
-- MIARINIAINA Lai Troy Mi Erica
-- RANDRIATSEHENO Rajo Stelly
-- VONIARIMALALA Fiaro Miangaly
-- ANDRIANARIVONY Zo Michael
+- VONIARIMALALA Fiaro Miangaly - 2381
+- ANDRIANARIVONY Zo Michael - 2382
+- RAMIARIMANANA Sompitriniaina To Désiré - 2405
+- RANDRIATSEHENO Rajo Stelly - 2417
+- RAKOTO SEDSON Bryan Donovan - 2444
+- MIARINIAINA Lai Troy Mi Erica - 2532
 
 ## 🚀 Installation et Lancement Rapide
 
