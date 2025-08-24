@@ -1,31 +1,22 @@
 # Système d'Enquête Policière en Prolog
 
-Un système expert d'enquête policière développé en SWI-Prolog avec interface web intégrée. Le système utilise la logique de Prolog pour déterminer la culpabilité des suspects basée sur les preuves disponibles.
+> Un système expert d'enquête policière développé en SWI-Prolog avec interface web intégrée. Utilise la logique de Prolog pour déterminer la culpabilité des suspects basée sur les preuves disponibles.
 
-## Table des Matières
+## 👥 Équipe de Développement
+Classe : M1 GB Groupe 1
 
-- [Fonctionnalités](#fonctionnalités)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Utilisation](#utilisation)
-- [Architecture](#architecture)
-- [Règles Logiques](#règles-logiques)
-- [API](#api)
-- [Captures d'écran](#captures-décran)
-- [Contribuer](#contribuer)
-- [License](#license)
+Membres du Groupe :
 
-## Fonctionnalités
+- RAKOTO SEDSON Bryan Donovan
+- RAMIARIMANANA Sompitriniaina To Désiré
+- VONIARIMALALA Fiaro Miangaly
+- ANDRIANARIVONY Zo Michael
+- RANDRIATSEHENO Rajo Stelly
+- MIARINIAINA Lai Troy Mi Erica
 
-- **Système expert en Prolog** : Logique déclarative pour l'analyse des preuves
-- **Interface web moderne** : HTML/CSS/JavaScript intégré
-- **API REST** : Endpoint JSON pour les requêtes d'investigation
-- **Serveur HTTP intégré** : Basé sur SWI-Prolog HTTP library
-- **Analyse en temps réel** : Résultats instantanés basés sur la base de connaissances
-- **Interface responsive** : Compatible desktop et mobile
+## 🚀 Installation et Lancement Rapide
 
-## Prérequis
-
+### Prérequis
 - **SWI-Prolog** (version 8.0+)
 - **Navigateur web moderne** (Chrome, Firefox, Safari, Edge)
 - **Port 8080** disponible
@@ -39,14 +30,13 @@ Un système expert d'enquête policière développé en SWI-Prolog avec interfac
 choco install swi-prolog
 ```
 
-
 #### Linux (Ubuntu/Debian)
 ```bash
 sudo apt-get update
 sudo apt-get install swi-prolog
 ```
 
-## Installation
+### 🎯 Démarrage en 3 étapes
 
 1. **Cloner le repository**
 ```bash
@@ -64,17 +54,17 @@ swipl -s server.pl -g start_server
 http://localhost:8080
 ```
 
-## Utilisation
+---
+
+## 📝 Utilisation
 
 ### Interface Web
-
 1. **Sélectionner un suspect** dans la liste déroulante
 2. **Choisir le type de crime** (Vol, Assassinat, Escroquerie)
 3. **Cliquer sur "START INVESTIGATION"**
 4. **Consulter le résultat** (GUILTY/NOT GUILTY)
 
-### Ligne de Commande Prolog
-
+### Test en Ligne de Commande Prolog
 ```prolog
 ?- [server].
 ?- is_guilty(john, vol).
@@ -84,36 +74,30 @@ true.
 false.
 ```
 
-### Requêtes API
+---
 
-```bash
-# GET request
-curl "http://localhost:8080/investigate?suspect=john&crime=vol"
+## 🎯 Fonctionnalités
 
-# Réponse JSON
-{"result": "guilty", "suspect": "john", "crime": "vol"}
-```
+- **Système expert en Prolog** : Logique déclarative pour l'analyse des preuves
+- **Interface web moderne** : HTML/CSS/JavaScript intégré
+- **API REST** : Endpoint JSON pour les requêtes d'investigation
+- **Serveur HTTP intégré** : Basé sur SWI-Prolog HTTP library
+- **Analyse en temps réel** : Résultats instantanés basés sur la base de connaissances
+- **Interface responsive** : Compatible desktop et mobile
 
-## Architecture
+---
 
-### Components
+## 🧠 Règles Logiques
 
-- **Backend Prolog** : Moteur d'inférence et serveur HTTP
-- **Frontend HTML/JS** : Interface utilisateur intégrée
-- **Base de connaissances** : Faits et règles sur les suspects
-- **API REST** : Communication JSON
-
-## Règles Logiques
-
-### Suspects et Crimes
+### Base de Données des Suspects
 
 | Suspect | Vol | Assassinat | Escroquerie |
 |---------|-----|------------|-------------|
-| John    | YES | NO         | NO          |
-| Mary    | NO  | YES        | NO          |
-| Alice   | NO  | NO         | YES         |
-| Bruno   | NO  | NO         | YES         |
-| Sophie  | NO  | NO          | YES         |
+| John    | ✅  | ❌         | ❌          |
+| Mary    | ❌  | ✅         | ❌          |
+| Alice   | ❌  | ❌         | ✅          |
+| Bruno   | ❌  | ❌         | ✅          |
+| Sophie  | ❌  | ❌         | ✅          |
 
 ### Règles d'Inférence
 
@@ -145,7 +129,19 @@ is_guilty(Suspect, escroquerie) :-
     ).
 ```
 
-## API
+---
+
+## 🔧 Architecture
+
+### Components
+- **Backend Prolog** : Moteur d'inférence et serveur HTTP
+- **Frontend HTML/JS** : Interface utilisateur intégrée
+- **Base de connaissances** : Faits et règles sur les suspects
+- **API REST** : Communication JSON
+
+---
+
+## 📡 API
 
 ### Endpoint d'Investigation
 
@@ -155,27 +151,23 @@ is_guilty(Suspect, escroquerie) :-
 - `suspect` (string) : Nom du suspect (john, mary, alice, bruno, sophie)
 - `crime` (string) : Type de crime (vol, assassinat, escroquerie)
 
-**Réponse :**
-```json
-{
-  "result": "guilty" | "not_guilty",
-  "suspect": "john",
-  "crime": "vol"
-}
-```
-
-**Exemple :**
+**Exemple de requête :**
 ```bash
 curl "http://localhost:8080/investigate?suspect=mary&crime=assassinat"
 ```
 
-### Page d'Accueil
+**Réponse JSON :**
+```json
+{
+  "result": "guilty",
+  "suspect": "mary",
+  "crime": "assassinat"
+}
+```
 
-**GET** `/`
+---
 
-Retourne l'interface web HTML complète.
-
-## Développement
+## 🛠️ Développement
 
 ### Ajouter un Nouveau Suspect
 
@@ -188,10 +180,9 @@ suspect(nouveau_suspect).
 ```prolog
 has_motive(nouveau_suspect, crime_type).
 was_near_crime_scene(nouveau_suspect, crime_type).
-% etc.
 ```
 
-3. **Mettre à jour l'interface**
+3. **Mettre à jour l'interface HTML**
 ```html
 <option value="nouveau_suspect">Nouveau Suspect</option>
 ```
@@ -202,7 +193,6 @@ was_near_crime_scene(nouveau_suspect, crime_type).
 ```prolog
 is_guilty(Suspect, nouveau_crime) :-
     suspect(Suspect),
-    % conditions spécifiques
     nouvelle_condition(Suspect, nouveau_crime).
 ```
 
@@ -211,7 +201,9 @@ is_guilty(Suspect, nouveau_crime) :-
 nouvelle_condition(suspect_name, nouveau_crime).
 ```
 
-## Contribuer
+---
+
+## 🤝 Contribuer
 
 1. **Fork** le projet
 2. **Créer** une branche feature (`git checkout -b feature/nouvelle-fonctionnalite`)
@@ -219,15 +211,9 @@ nouvelle_condition(suspect_name, nouveau_crime).
 4. **Push** la branche (`git push origin feature/nouvelle-fonctionnalite`)
 5. **Créer** une Pull Request
 
-### Guidelines
+---
 
-- Respecter la syntaxe Prolog
-- Commenter les règles complexes
-- Tester les nouvelles fonctionnalités
-- Maintenir la compatibilité API
-
-
-## Ressources
+## 📚 Ressources
 
 - [SWI-Prolog Documentation](https://www.swi-prolog.org/pldoc/)
 - [Prolog Tutorial](https://www.swi-prolog.org/pldoc/man?section=quickstart)
